@@ -5,22 +5,23 @@ import Feedback from "./components/Feedback/Feedback";
 import Description from "./components/Description/Description";
 import Notification from "./components/Notification/Notification";
 
-const emptyFeedbackInit = {
+const emptyFeedbackModel = {
   good: 0,
   neutral: 0,
   bad: 0,
 };
 
 function App() {
-  const feedbacksStorageData = localStorage.getItem("feedbacks");
-  const initFeedbacks = feedbacksStorageData
-    ? JSON.parse(feedbacksStorageData)
-    : emptyFeedbackInit;
-  const [feedbacks, setFeedbacks] = useState(initFeedbacks);
+  const [feedbacks, setFeedbacks] = useState(() => {
+    const feedbacksStorageData = localStorage.getItem("feedbacks");
+    return feedbacksStorageData
+      ? JSON.parse(feedbacksStorageData)
+      : emptyFeedbackModel;
+  });
 
   const updateFeedback = (feedbackType) => {
     if (feedbackType === "reset") {
-      setFeedbacks(emptyFeedbackInit);
+      setFeedbacks(emptyFeedbackModel);
     } else {
       setFeedbacks({
         ...feedbacks,
